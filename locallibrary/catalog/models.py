@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class MyModelName(models.Model):
+class Genre(models.Model):
     """A typical class defining a model, derived from the Model class."""
 
     # Fields
