@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf.global_settings import LANGUAGES
 
 # Create your models here.
 class Genre(models.Model):
@@ -33,6 +34,10 @@ class Book(models.Model):
     def get_absolute_url(self):
         """Returns the url to access a detail record for this book."""
         return reverse('book-detail', args=[str(self.id)])
+    def display_genre(self):
+        return ', '.join(genre.name for genre in self.genre.all()[:3])
+    display_genre.short_description = 'Genre'
+
 import uuid # Required for unique book instances
 
 class BookInstance(models.Model):
@@ -84,7 +89,7 @@ class Author(models.Model):
         return f'{self.last_name}, {self.first_name}'
 
 class Language(models.Model):
-    language = models.CharField(max_length  = 100)
+    language = models.CharField(max_length=7, choices=LANGUAGES)
 
     class Meta:
         ordering = ['language']
@@ -92,3 +97,4 @@ class Language(models.Model):
         return reverse('language-detail',args = [str(self.id)])
     def __str__(self):
         return self.language
+
